@@ -157,12 +157,6 @@
         </dependency>
         <!--SendCloud邮件发送END-->
 
-        <dependency>
-            <groupId>com.helloztt.springMvc</groupId>
-            <artifactId>logisticsService</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-
     </dependencies>
 
     <build>
