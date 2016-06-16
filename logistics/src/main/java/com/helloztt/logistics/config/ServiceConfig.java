@@ -1,4 +1,4 @@
-package com.helloztt.logisticsService.config;
+package com.helloztt.logistics.config;
 
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;

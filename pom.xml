@@ -10,13 +10,11 @@
     <version>1.0-SNAPSHOT</version>
     <modules>
         <module>logistics</module>
-        <module>logisticsService</module>
     </modules>
     <properties>
         <lib.version>1.8</lib.version>
         <spring.version>4.2.3.RELEASE</spring.version>
         <spring.security.version>4.0.3.RELEASE</spring.security.version>
-        <seleniumhq.varsion>2.48.2</seleniumhq.varsion>
     </properties>
 
     <dependencyManagement>
@@ -57,30 +55,6 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-test</artifactId>
             <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-api</artifactId>
-            <version>${seleniumhq.varsion}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-support</artifactId>
-            <version>${seleniumhq.varsion}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-htmlunit-driver</artifactId>
-            <version>${seleniumhq.varsion}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.seleniumhq.selenium</groupId>
-            <artifactId>selenium-remote-driver</artifactId>
-            <version>${seleniumhq.varsion}</version>
             <scope>test</scope>
         </dependency>
         <dependency>

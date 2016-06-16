@@ -22,7 +22,7 @@
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
         <property name="dataSource" ref="dataSource"></property>
         <property name="persistenceUnitName" value="entity"/>
-        <property name="packagesToScan" value="com.helloztt.logisticsService.entity"/>
+        <property name="packagesToScan" value="com.helloztt.logistics.entity"/>
         <property name="persistenceProvider">
             <bean class="org.eclipse.persistence.jpa.PersistenceProvider"/>
         </property>

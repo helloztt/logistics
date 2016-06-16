@@ -1,7 +1,7 @@
 package com.helloztt.logistics;
 
 import com.helloztt.logistics.config.MVCConfig;
-import com.helloztt.logisticsService.config.ServiceConfig;
+import com.helloztt.logistics.config.ServiceConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
