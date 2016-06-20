@@ -1,7 +1,6 @@
 package com.helloztt.logistics;
 
 import com.helloztt.logistics.config.MVCConfig;
-import com.helloztt.logistics.config.ServiceConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 /**
@@ -11,7 +10,7 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected Class<?>[] getRootConfigClasses() {
         return new Class<?>[]{
-                MVCConfig.class, ServiceConfig.class
+                MVCConfig.class
         };
     }
 
