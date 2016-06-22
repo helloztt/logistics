@@ -1,10 +1,14 @@
 package com.helloztt.logistics.config;
 
+import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.ImportResource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.http.MediaType;
@@ -15,8 +19,9 @@ import org.springframework.web.multipart.commons.CommonsMultipartResolver;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.springsecurity4.dialect.SpringSecurityDialect;
 import org.thymeleaf.spring4.SpringTemplateEngine;
+import org.thymeleaf.spring4.templateresolver.SpringResourceTemplateResolver;
 import org.thymeleaf.spring4.view.ThymeleafViewResolver;
-import org.thymeleaf.templateresolver.ServletContextTemplateResolver;
+import org.thymeleaf.templatemode.TemplateMode;
 
 import java.util.Arrays;
 import java.util.List;
@@ -39,6 +44,8 @@ import java.util.List;
 public class MVCConfig extends WebMvcConfigurerAdapter {
     @Autowired
     private Environment env;
+    @Autowired
+    private ApplicationContext applicationContext;
 
     /**
      * for upload
@@ -63,6 +70,7 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
         converters.add(converter);
     }
 
+
     @Override
     public void configureViewResolvers(ViewResolverRegistry registry) {
         super.configureViewResolvers(registry);
@@ -75,10 +83,12 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
 
     public ThymeleafViewResolver viewResolver() {
 
-        ServletContextTemplateResolver rootTemplateResolver = new ServletContextTemplateResolver();
+        SpringResourceTemplateResolver  rootTemplateResolver =
+                new SpringResourceTemplateResolver();
+        rootTemplateResolver.setApplicationContext(this.applicationContext);
         rootTemplateResolver.setPrefix("/");
         rootTemplateResolver.setSuffix(".html");
-        rootTemplateResolver.setTemplateMode("HTML5");
+        rootTemplateResolver.setTemplateMode(TemplateMode.HTML);
         rootTemplateResolver.setCharacterEncoding("UTF-8");
         if (env.acceptsProfiles("!container")) {
             rootTemplateResolver.setCacheable(false);
@@ -96,6 +106,14 @@ public class MVCConfig extends WebMvcConfigurerAdapter {
         resolver.setTemplateEngine(engine);
         resolver.setContentType("text/html;charset=utf-8");
         return resolver;
+    }
+
+    @Bean
+    public ResourceBundleMessageSource messageSource(){
+        ResourceBundleMessageSource messageSource = new ResourceBundleMessageSource();
+        messageSource.setDefaultEncoding("UTF-8");
+        messageSource.setBasename("message/message");
+        return messageSource;
     }
 
 }

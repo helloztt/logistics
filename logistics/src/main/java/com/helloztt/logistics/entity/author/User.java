@@ -58,7 +58,7 @@ public class User implements Serializable,UserDetails {
 
     @Override
     public boolean isAccountNonLocked() {
-        return this.disabled;
+        return !this.disabled;
     }
 
     @Override
@@ -68,6 +68,10 @@ public class User implements Serializable,UserDetails {
 
     @Override
     public boolean isEnabled() {
-        return this.deleted;
+        return !this.deleted;
+    }
+
+    public User getUser(){
+        return this;
     }
 }

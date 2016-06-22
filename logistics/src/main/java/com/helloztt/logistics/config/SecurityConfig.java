@@ -1,10 +1,14 @@
 package com.helloztt.logistics.config;
 
+import com.helloztt.logistics.service.user.UserService;
 import com.helloztt.logistics.service.user.impl.UserServiceImpl;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.DependsOn;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
@@ -34,19 +38,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
             "/loginFailed"
     };
 
-    // Since MultiSecurityConfig does not extend GlobalMethodSecurityConfiguration and
-    // define an AuthenticationManager, it will try using the globally defined
-    // AuthenticationManagerBuilder to create one
-    // The @Enable*Security annotations create a global AuthenticationManagerBuilder
-    // that can optionally be used for creating an AuthenticationManager that is shared
-    // The key to using it is to use the @Autowired annotation
-    @Autowired
-    public void registerSharedAuthentication(AuthenticationManagerBuilder auth) throws Exception {
-        auth.userDetailsService(userDetailsService).passwordEncoder(passwordEncoder);
-    }
-
     @Bean
-    public BCryptPasswordEncoder passwordEncoder() {
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
@@ -65,6 +58,25 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
         web.ignoring().antMatchers(STATIC_RESOURCE_PATH);
     }
 
+    // Since MultiSecurityConfig does not extend GlobalMethodSecurityConfiguration and
+    // define an AuthenticationManager, it will try using the globally defined
+    // AuthenticationManagerBuilder to create one
+    // The @Enable*Security annotations create a global AuthenticationManagerBuilder
+    // that can optionally be used for creating an AuthenticationManager that is shared
+    // The key to using it is to use the @Autowired annotation
+    /*@Autowired
+    public void registerSharedAuthentication(AuthenticationManagerBuilder auth) throws Exception {
+        //密码不加密
+        auth.userDetailsService(userDetailsService);
+    }*/
+
+    @Autowired
+    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
+        auth.userDetailsService(userDetailsService);
+    }
+
+
+
     @Override
     protected void configure(HttpSecurity http) throws Exception {
         http
@@ -77,9 +89,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .formLogin()
                 .loginPage(LOGIN_PAGE)
                 .defaultSuccessUrl(LOGIN_SUCCESS_URL)
+                .failureUrl(LOGIN_ERROR_URL)
                 .permitAll()
                 .and()
                 .logout()
+                .invalidateHttpSession(true)
                 .logoutSuccessUrl(LOGOUT_SUCCESS_URL);
     }
 }

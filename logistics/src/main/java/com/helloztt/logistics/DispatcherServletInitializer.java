@@ -1,7 +1,10 @@
 package com.helloztt.logistics;
 
 import com.helloztt.logistics.config.MVCConfig;
+import org.springframework.web.filter.CharacterEncodingFilter;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
+
+import javax.servlet.Filter;
 
 /**
  * Created by helloztt on 2016/5/7.
@@ -22,5 +25,10 @@ public class DispatcherServletInitializer extends AbstractAnnotationConfigDispat
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};
+    }
+
+    @Override
+    protected Filter[] getServletFilters() {
+        return new Filter[]{new CharacterEncodingFilter("UTF-8")};
     }
 }
